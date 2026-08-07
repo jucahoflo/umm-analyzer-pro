@@ -10,7 +10,6 @@ import io
 import time
 import json
 import zipfile
-import os
 
 # ==================== CONFIGURACIÓN DE PÁGINA ====================
 st.set_page_config(
@@ -20,296 +19,423 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ==================== CSS PERSONALIZADO ====================
+# ==================== CSS PERSONALIZADO - VERSIÓN ESPECTACULAR ====================
 st.markdown("""
 <style>
+    /* FONDO CON GRADIENTE ANIMADO */
     .stApp {
-        background: #f0f2f6;
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        background-attachment: fixed;
     }
     
+    .stApp::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(ellipse at 20% 50%, rgba(72, 49, 212, 0.1) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+    }
+    
+    /* ANIMACIONES GLOBALES */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+    @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+    }
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .fade-in {
+        animation: fadeInUp 0.8s ease-out;
+    }
+    
+    /* ENCABEZADO CON EFECTO GLASSMORPHISM */
     .main-header {
-        background: linear-gradient(135deg, #0a1628, #1a2a6c, #16213e);
-        padding: 1.2rem 2rem;
-        border-radius: 10px;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 1.5rem 2.5rem;
+        border-radius: 20px;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 3px solid #ffd700;
+        position: relative;
+        z-index: 1;
+        animation: slideDown 0.8s ease-out;
+    }
+    .main-header::before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        right: -1px;
+        bottom: -1px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, rgba(255,215,0,0.2), transparent, rgba(255,215,0,0.1));
+        z-index: -1;
     }
     .main-header .left {
         display: flex;
         align-items: center;
-        gap: 1.2rem;
+        gap: 1.5rem;
     }
     .main-header .logo {
-        font-size: 2.2rem;
-        background: rgba(255,215,0,0.12);
-        padding: 0.4rem 0.8rem;
-        border-radius: 8px;
-        border: 1px solid rgba(255,215,0,0.2);
+        font-size: 2.8rem;
+        background: linear-gradient(135deg, #ffd700, #f7971e);
+        padding: 0.5rem 1rem;
+        border-radius: 16px;
+        box-shadow: 0 0 40px rgba(255,215,0,0.15);
+        animation: pulse 3s ease-in-out infinite;
     }
     .main-header h1 {
         color: white;
-        font-size: 1.6rem;
-        font-weight: 700;
+        font-size: 2rem;
+        font-weight: 800;
         margin: 0;
-    }
-    .main-header h1 .highlight {
-        color: #ffd700;
+        letter-spacing: -0.5px;
+        background: linear-gradient(90deg, #ffffff, #ffd700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
     .main-header .subtitle {
-        color: rgba(255,255,255,0.6);
+        color: rgba(255,255,255,0.4);
         font-size: 0.75rem;
         margin: 0;
-        letter-spacing: 0.5px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
     }
     .main-header .right {
         text-align: right;
-        border-left: 2px solid rgba(255,255,255,0.1);
+        border-left: 2px solid rgba(255,255,255,0.08);
         padding-left: 1.5rem;
     }
     .main-header .right .name {
         color: #ffd700;
-        font-size: 1rem;
+        font-size: 1.1rem;
         font-weight: 700;
         letter-spacing: 0.5px;
+        text-shadow: 0 0 30px rgba(255,215,0,0.1);
     }
     .main-header .right .title {
-        color: rgba(255,255,255,0.5);
+        color: rgba(255,255,255,0.35);
         font-size: 0.7rem;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        letter-spacing: 2px;
     }
     .main-header .right .badge {
         display: inline-block;
-        background: rgba(255,215,0,0.1);
-        padding: 0.15rem 0.8rem;
-        border-radius: 4px;
+        background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,215,0,0.05));
+        padding: 0.2rem 1rem;
+        border-radius: 20px;
         font-size: 0.6rem;
         color: #ffd700;
-        border: 1px solid rgba(255,215,0,0.15);
+        border: 1px solid rgba(255,215,0,0.1);
         margin-top: 0.2rem;
         letter-spacing: 0.5px;
     }
     
+    /* TABS MEJORADOS - MÁS VISIBLES Y MODERNOS */
     .stTabs [data-baseweb="tab-list"] {
         gap: 0.5rem;
-        background: white;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(10px);
         padding: 0.5rem;
-        border-radius: 12px;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-        border: 1px solid #e8e8e8;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
     }
     .stTabs [data-baseweb="tab"] {
-        border-radius: 8px !important;
-        padding: 0.7rem 1.5rem !important;
+        border-radius: 10px !important;
+        padding: 0.8rem 1.8rem !important;
         font-weight: 700 !important;
         font-size: 0.85rem !important;
-        transition: all 0.3s ease !important;
-        background: #f8f9fa !important;
-        color: #6c757d !important;
-        border: 2px solid transparent !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        background: rgba(255,255,255,0.03) !important;
+        color: rgba(255,255,255,0.5) !important;
+        border: 1px solid transparent !important;
         letter-spacing: 0.3px;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        background: #e9ecef !important;
+        background: rgba(255,255,255,0.08) !important;
+        color: white !important;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     .stTabs [data-baseweb="tab"][aria-selected="true"] {
-        background: linear-gradient(135deg, #1a2a6c, #16213e) !important;
+        background: linear-gradient(135deg, #1a2a6c, #302b63) !important;
         color: white !important;
-        border-color: #ffd700 !important;
-        box-shadow: 0 4px 15px rgba(26, 42, 108, 0.35) !important;
-        transform: translateY(-2px);
+        border-color: rgba(255,215,0,0.3) !important;
+        box-shadow: 0 10px 30px -5px rgba(26, 42, 108, 0.5) !important;
+        transform: translateY(-3px);
     }
     
+    /* TARJETAS DE MÉTRICAS - GLASSMORPHISM */
     .metric-card {
-        background: white;
-        padding: 1rem 1.2rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(10px);
+        padding: 1.2rem 1.5rem;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
         text-align: center;
-        transition: all 0.3s ease;
-        border-left: 4px solid #1a2a6c;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border-left: 4px solid #ffd700;
         height: 100%;
-        border-top: 1px solid rgba(0,0,0,0.04);
+        animation: fadeInUp 0.6s ease-out;
     }
     .metric-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5);
+        border-color: #ffd700;
+        background: rgba(255,255,255,0.08);
+    }
+    .metric-card .icon {
+        font-size: 1.8rem;
+        margin-bottom: 0.3rem;
+        display: block;
     }
     .metric-card .label {
         font-size: 0.65rem;
-        color: #888;
+        color: rgba(255,255,255,0.4);
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: 1.5px;
     }
     .metric-card .value {
-        font-size: 1.6rem;
-        font-weight: 700;
-        color: #1a2a6c;
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: white;
         margin: 0.2rem 0;
+        background: linear-gradient(90deg, #ffffff, #ffd700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
     .metric-card .unit {
         font-size: 0.7rem;
-        color: #aaa;
-    }
-    .metric-card .icon {
-        font-size: 1.5rem;
-        margin-bottom: 0.2rem;
-        opacity: 0.7;
+        color: rgba(255,255,255,0.3);
     }
     
+    /* TARJETAS DE ESTADO */
     .status-card {
-        background: white;
-        padding: 1rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(10px);
+        padding: 1.2rem;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
         text-align: center;
-        transition: all 0.3s ease;
-        border-top: 1px solid rgba(0,0,0,0.04);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: fadeInUp 0.8s ease-out;
     }
     .status-card:hover {
-        transform: scale(1.01);
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        transform: scale(1.03);
+        box-shadow: 0 20px 40px -10px rgba(0,0,0,0.4);
     }
     .status-card .status-icon {
-        font-size: 1.8rem;
+        font-size: 2.5rem;
     }
     .status-card .status-label {
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-top: 0.2rem;
-        color: #333;
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-top: 0.3rem;
+        color: white;
     }
     .status-card .status-detail {
         font-size: 0.7rem;
-        color: #888;
+        color: rgba(255,255,255,0.3);
         margin-top: 0.1rem;
     }
     .status-ok { border-left: 4px solid #28a745; }
     .status-warning { border-left: 4px solid #ffc107; }
     .status-danger { border-left: 4px solid #dc3545; }
     
+    /* BOTONES CON EFECTO */
     .stButton > button {
-        background: linear-gradient(135deg, #1a2a6c, #16213e);
+        background: linear-gradient(135deg, #1a2a6c, #302b63) !important;
         color: white !important;
-        border: none !important;
-        border-radius: 6px !important;
-        padding: 0.5rem 1.2rem !important;
-        font-weight: 600 !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 2px 10px rgba(26, 42, 108, 0.25) !important;
-        font-size: 0.8rem !important;
+        border: 1px solid rgba(255,215,0,0.2) !important;
+        border-radius: 12px !important;
+        padding: 0.7rem 1.5rem !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 10px 30px -10px rgba(26, 42, 108, 0.4) !important;
+        backdrop-filter: blur(10px);
+        letter-spacing: 0.5px;
     }
     .stButton > button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 4px 20px rgba(26, 42, 108, 0.35) !important;
+        transform: translateY(-3px) scale(1.02) !important;
+        box-shadow: 0 20px 40px -10px rgba(26, 42, 108, 0.6) !important;
+        border-color: #ffd700 !important;
     }
     
+    /* SIDEBAR */
     .css-1d391kg {
-        background: linear-gradient(180deg, #0a1628, #1a2a6c) !important;
+        background: linear-gradient(180deg, rgba(15,12,41,0.95), rgba(48,43,99,0.95)) !important;
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(255,255,255,0.05);
     }
     .css-1d391kg .stMarkdown {
-        color: white !important;
+        color: rgba(255,255,255,0.8) !important;
+    }
+    .css-1d391kg .stSelectbox label {
+        color: rgba(255,255,255,0.6) !important;
+    }
+    .css-1d391kg .stSlider label {
+        color: rgba(255,255,255,0.6) !important;
+    }
+    .css-1d391kg .stCheckbox label {
+        color: rgba(255,255,255,0.6) !important;
     }
     
+    /* SIDEBAR - INFO DEL ESPECIALISTA */
     .specialist-card {
-        background: rgba(255,255,255,0.05);
-        padding: 0.8rem;
-        border-radius: 8px;
+        background: linear-gradient(135deg, rgba(255,215,0,0.05), rgba(255,215,0,0.02));
+        padding: 1rem;
+        border-radius: 16px;
         margin-top: 1rem;
         text-align: center;
-        border: 1px solid rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,215,0,0.08);
         border-left: 3px solid #ffd700;
+        backdrop-filter: blur(10px);
     }
     .specialist-card .icon {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         opacity: 0.6;
     }
     .specialist-card .name {
-        font-size: 0.9rem;
+        font-size: 1rem;
         font-weight: 700;
         color: #ffd700;
-        margin: 0.1rem 0;
+        margin: 0.2rem 0;
     }
     .specialist-card .title {
         font-size: 0.65rem;
-        color: rgba(255,255,255,0.5);
+        color: rgba(255,255,255,0.4);
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: 1px;
     }
     .specialist-card .badge {
         display: inline-block;
         background: rgba(255,215,0,0.1);
-        padding: 0.1rem 0.5rem;
-        border-radius: 4px;
+        padding: 0.15rem 0.8rem;
+        border-radius: 20px;
         font-size: 0.55rem;
         color: #ffd700;
         border: 1px solid rgba(255,215,0,0.1);
-        margin-top: 0.1rem;
+        margin-top: 0.2rem;
     }
     
+    /* EXPORT CARDS */
     .export-card {
-        background: white;
-        padding: 1rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-        margin: 0.3rem 0;
-        transition: all 0.3s ease;
-        border-top: 1px solid rgba(0,0,0,0.04);
+        background: rgba(255,255,255,0.03);
+        backdrop-filter: blur(10px);
+        padding: 1.2rem;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.06);
+        margin: 0.5rem 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .export-card:hover {
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+        border-color: rgba(255,215,0,0.2);
     }
     .export-card .title {
-        font-size: 0.9rem;
+        font-size: 1rem;
         font-weight: 700;
-        color: #1a2a6c;
+        color: white;
         margin-bottom: 0.2rem;
     }
     .export-card .subtitle {
         font-size: 0.7rem;
-        color: #888;
+        color: rgba(255,255,255,0.3);
     }
     .export-badge {
         display: inline-block;
-        padding: 0.1rem 0.5rem;
-        border-radius: 4px;
+        padding: 0.15rem 0.7rem;
+        border-radius: 20px;
         font-size: 0.6rem;
         font-weight: 600;
-        margin: 0.1rem;
+        margin: 0.15rem;
     }
-    .badge-csv { background: #e8f5e9; color: #2e7d32; }
-    .badge-excel { background: #e3f2fd; color: #0d47a1; }
-    .badge-json { background: #fff3e0; color: #e65100; }
-    .badge-raw { background: #fce4ec; color: #c62828; }
-    .badge-scaled { background: #e8eaf6; color: #283593; }
-    .badge-vsd { background: #fff8e1; color: #f57f17; }
+    .badge-csv { background: rgba(46,125,50,0.2); color: #81c784; border: 1px solid rgba(46,125,50,0.2); }
+    .badge-excel { background: rgba(13,71,161,0.2); color: #64b5f6; border: 1px solid rgba(13,71,161,0.2); }
+    .badge-json { background: rgba(230,81,0,0.2); color: #ffb74d; border: 1px solid rgba(230,81,0,0.2); }
+    .badge-raw { background: rgba(198,40,40,0.2); color: #ef9a9a; border: 1px solid rgba(198,40,40,0.2); }
+    .badge-scaled { background: rgba(40,53,147,0.2); color: #7986cb; border: 1px solid rgba(40,53,147,0.2); }
+    .badge-vsd { background: rgba(245,127,23,0.2); color: #ffcc80; border: 1px solid rgba(245,127,23,0.2); }
     
+    /* FOOTER */
     .footer {
         text-align: center;
-        padding: 1.2rem;
-        color: #888;
-        border-top: 1px solid #e0e0e0;
+        padding: 1.5rem;
+        color: rgba(255,255,255,0.2);
+        border-top: 1px solid rgba(255,255,255,0.05);
         margin-top: 2rem;
         font-size: 0.7rem;
     }
     .footer .vsd {
         color: #ffd700;
         font-weight: 700;
-        background: #1a2a6c;
-        padding: 0.1rem 0.8rem;
-        border-radius: 4px;
-        display: inline-block;
     }
     .footer .separator {
-        color: #ccc;
+        color: rgba(255,255,255,0.1);
         margin: 0 0.5rem;
+    }
+    
+    /* HEADER EN PANTALLA DE INICIO */
+    .welcome-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #ffffff, #ffd700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .welcome-subtitle {
+        color: rgba(255,255,255,0.4);
+        font-size: 1rem;
+    }
+    .welcome-badge {
+        background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,215,0,0.05));
+        padding: 0.3rem 1.5rem;
+        border-radius: 20px;
+        display: inline-block;
+        border: 1px solid rgba(255,215,0,0.1);
+        color: #ffd700;
+        font-weight: 600;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+    }
+    
+    /* SUBTITULOS */
+    .section-title {
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        letter-spacing: 0.5px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -377,40 +503,40 @@ def generar_reporte_completo(df_crudo, df_escalado, nombre_archivo):
     <head>
         <title>UMM Analyzer Pro - VSD Specialist Report</title>
         <style>
-            body {{ font-family: Arial, sans-serif; margin: 30px; background: #f0f2f6; }}
+            body {{ font-family: Arial, sans-serif; margin: 30px; background: #0f0c29; color: white; }}
             .container {{ max-width: 1200px; margin: 0 auto; }}
-            .header {{ background: linear-gradient(135deg, #0a1628, #1a2a6c); padding: 1.5rem 2rem; border-radius: 8px; color: white; }}
+            .header {{ background: linear-gradient(135deg, #1a2a6c, #302b63); padding: 2rem; border-radius: 16px; }}
             .header h1 {{ margin: 0; color: #ffd700; }}
-            .header .sub {{ color: rgba(255,255,255,0.7); font-size: 0.85rem; }}
-            .section {{ background: white; padding: 1.5rem; margin: 1rem 0; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }}
+            .header .sub {{ color: rgba(255,255,255,0.6); }}
+            .section {{ background: rgba(255,255,255,0.05); padding: 1.5rem; margin: 1rem 0; border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }}
             table {{ border-collapse: collapse; width: 100%; font-size: 0.85rem; }}
-            th, td {{ border: 1px solid #ddd; padding: 6px 10px; text-align: left; }}
-            th {{ background-color: #1a2a6c; color: white; }}
-            .footer {{ text-align: center; color: #888; margin-top: 1.5rem; padding: 1rem; border-top: 1px solid #ddd; font-size: 0.8rem; }}
-            .vsd-badge {{ background: #fff8e1; color: #f57f17; padding: 0.2rem 1rem; border-radius: 4px; display: inline-block; }}
+            th, td {{ border: 1px solid rgba(255,255,255,0.1); padding: 8px 12px; text-align: left; }}
+            th {{ background-color: rgba(255,215,0,0.1); color: #ffd700; }}
+            .footer {{ text-align: center; color: rgba(255,255,255,0.3); margin-top: 2rem; padding: 1rem; border-top: 1px solid rgba(255,255,255,0.05); }}
+            .vsd-badge {{ background: rgba(255,215,0,0.1); color: #ffd700; padding: 0.2rem 1rem; border-radius: 20px; display: inline-block; border: 1px solid rgba(255,215,0,0.1); }}
         </style>
     </head>
     <body>
         <div class="container">
             <div class="header">
-                <h1>UMM Analyzer Pro</h1>
+                <h1>⚡ UMM Analyzer Pro</h1>
                 <div class="vsd-badge">ESPECIALISTA VSD - FRONTEND DEVELOPER - JUAN CARLOS HOLGUIN</div>
                 <p class="sub">Archivo: {nombre_archivo} | Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
                 <p class="sub">Registros: {len(df_escalado)} | Parámetros: {len(NOMBRES_PARAM)}</p>
             </div>
             
             <div class="section">
-                <h2>Datos Escalados (Valores Reales)</h2>
+                <h2>📊 Datos Escalados (Valores Reales)</h2>
                 {df_escalado.describe().to_html()}
             </div>
             
             <div class="section">
-                <h2>Datos Crudos (Sin Escalar)</h2>
+                <h2>📊 Datos Crudos (Sin Escalar)</h2>
                 {df_crudo.describe().to_html()}
             </div>
             
             <div class="section">
-                <h2>Muestra de Datos</h2>
+                <h2>📋 Muestra de Datos</h2>
                 <h3>Datos Escalados</h3>
                 {df_escalado.head(20).to_html()}
                 <h3>Datos Crudos</h3>
@@ -418,7 +544,7 @@ def generar_reporte_completo(df_crudo, df_escalado, nombre_archivo):
             </div>
             
             <div class="section">
-                <h2>Configuración de Parámetros</h2>
+                <h2>⚙️ Configuración de Parámetros</h2>
                 <table>
                     <tr><th>Parámetro</th><th>Factor</th><th>Unidad</th><th>Rango</th></tr>
                     {''.join([f"<tr><td>{p}</td><td>{PARAMETROS[p]['factor']}</td><td>{PARAMETROS[p]['unidad']}</td><td>{PARAMETROS[p]['rango'][0]} - {PARAMETROS[p]['rango'][1]}</td></tr>" for p in NOMBRES_PARAM])}
@@ -436,11 +562,11 @@ def generar_reporte_completo(df_crudo, df_escalado, nombre_archivo):
 
 # ==================== HEADER ====================
 st.markdown("""
-<div class="main-header">
+<div class="main-header fade-in">
     <div class="left">
         <div class="logo">⚡</div>
         <div>
-            <h1>UMM <span class="highlight">Analyzer Pro</span></h1>
+            <h1>UMM <span style="-webkit-text-fill-color:#ffd700;">Analyzer Pro</span></h1>
             <p class="subtitle">Industrial Monitoring &amp; Data Analysis Platform</p>
         </div>
     </div>
@@ -456,8 +582,8 @@ st.markdown("""
 with st.sidebar:
     st.markdown("""
     <div style="text-align: center; padding: 0.5rem 0;">
-        <div style="font-size: 1.8rem;">⚡</div>
-        <h3 style="color: white; margin: 0; font-size: 0.9rem; letter-spacing: 1px;">CONTROL PANEL</h3>
+        <div style="font-size: 2rem; opacity: 0.6;">⚡</div>
+        <h3 style="color: white; margin: 0; font-size: 0.9rem; letter-spacing: 2px; opacity: 0.6;">CONTROL PANEL</h3>
     </div>
     """, unsafe_allow_html=True)
     
@@ -479,7 +605,7 @@ with st.sidebar:
         archivo_subido.seek(0)
         
         st.markdown("---")
-        st.markdown("### Settings")
+        st.markdown("### ⚙️ Settings")
         
         limite_muestras = st.slider(
             "Sample Limit",
@@ -506,15 +632,15 @@ with st.sidebar:
         <div class="name">Juan Carlos Holguin</div>
         <div class="title">Especialista VSD</div>
         <div class="badge">Frontend Developer</div>
-        <div style="font-size: 0.55rem; color: rgba(255,255,255,0.25); margin-top: 0.4rem;">
+        <div style="font-size: 0.55rem; color: rgba(255,255,255,0.2); margin-top: 0.4rem;">
             Industrial Automation Expert
         </div>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
-    <div style="text-align: center; color: rgba(255,255,255,0.15); font-size: 0.55rem; margin-top: 1rem;">
-        v4.0 | Professional Edition
+    <div style="text-align: center; color: rgba(255,255,255,0.08); font-size: 0.55rem; margin-top: 1rem;">
+        v5.0 | Professional Edition
     </div>
     """, unsafe_allow_html=True)
 
@@ -528,11 +654,10 @@ if st.session_state.get('procesar', False):
         try:
             contenido = archivo_subido.read()
             
-            with st.spinner("Processing data..."):
+            with st.spinner("🔍 Processing data..."):
                 time.sleep(0.5)
                 datos_limpios = extraer_datos_binarios(contenido, limite_muestras)
                 
-                # Verificar si hay datos suficientes
                 if len(datos_limpios) < 10:
                     st.error(f"⚠️ Datos insuficientes: solo se encontraron {len(datos_limpios)} valores")
                     st.info("💡 El archivo puede estar corrupto o no tener el formato esperado")
@@ -578,7 +703,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     with col1:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="icon">📊</div>
+            <span class="icon">📊</span>
             <div class="label">Records</div>
             <div class="value">{num_filas:,}</div>
             <div class="unit">total samples</div>
@@ -589,7 +714,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         ultimo = df_escalado.iloc[-1]
         st.markdown(f"""
         <div class="metric-card" style="border-left-color: #007bff;">
-            <div class="icon">⚡</div>
+            <span class="icon">⚡</span>
             <div class="label">Frequency</div>
             <div class="value">{ultimo['Frecuencia']:.2f}</div>
             <div class="unit">Hz</div>
@@ -599,7 +724,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     with col3:
         st.markdown(f"""
         <div class="metric-card" style="border-left-color: #28a745;">
-            <div class="icon">🔌</div>
+            <span class="icon">🔌</span>
             <div class="label">Current</div>
             <div class="value">{ultimo['Corriente']:.3f}</div>
             <div class="unit">A</div>
@@ -609,7 +734,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     with col4:
         st.markdown(f"""
         <div class="metric-card" style="border-left-color: #dc3545;">
-            <div class="icon">🌡️</div>
+            <span class="icon">🌡️</span>
             <div class="label">Temperature</div>
             <div class="value">{ultimo['Temperatura']:.0f}</div>
             <div class="unit">°C</div>
@@ -622,7 +747,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     with col1:
         st.markdown(f"""
         <div class="metric-card" style="border-left-color: #17a2b8;">
-            <div class="icon">🔄</div>
+            <span class="icon">🔄</span>
             <div class="label">Speed</div>
             <div class="value">{ultimo['Velocidad']:.0f}</div>
             <div class="unit">RPM</div>
@@ -632,7 +757,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     with col2:
         st.markdown(f"""
         <div class="metric-card" style="border-left-color: #fd7e14;">
-            <div class="icon">🔧</div>
+            <span class="icon">🔧</span>
             <div class="label">Torque</div>
             <div class="value">{ultimo['Torque']:.2f}</div>
             <div class="unit">Nm</div>
@@ -642,7 +767,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     with col3:
         st.markdown(f"""
         <div class="metric-card" style="border-left-color: #ffc107;">
-            <div class="icon">⚡</div>
+            <span class="icon">⚡</span>
             <div class="label">Voltage</div>
             <div class="value">{ultimo['Voltaje']:.2f}</div>
             <div class="unit">V</div>
@@ -652,7 +777,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     with col4:
         st.markdown(f"""
         <div class="metric-card" style="border-left-color: #6f42c1;">
-            <div class="icon">💡</div>
+            <span class="icon">💡</span>
             <div class="label">Power</div>
             <div class="value">{ultimo['Potencia']:.3f}</div>
             <div class="unit">kW</div>
@@ -720,7 +845,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     ])
     
     with tab1:
-        st.subheader("Real-time Monitoring")
+        st.markdown('<p class="section-title">📈 Real-time Monitoring</p>', unsafe_allow_html=True)
         
         parametros_grafico = st.multiselect(
             "Select parameters:",
@@ -740,27 +865,42 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
                 height=450,
                 hovermode='x unified',
                 plot_bgcolor='rgba(0,0,0,0)',
-                paper_bgcolor='rgba(0,0,0,0)',
-                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+                paper_bgcolor='rgba(255,255,255,0.05)',
+                font=dict(color='white'),
+                legend=dict(
+                    orientation="h", 
+                    yanchor="bottom", 
+                    y=1.02, 
+                    xanchor="right", 
+                    x=1,
+                    font=dict(color='white')
+                ),
+                title_font=dict(color='white')
             )
-            fig.update_traces(line=dict(width=2))
+            fig.update_traces(line=dict(width=2.5))
             st.plotly_chart(fig, use_container_width=True)
     
     with tab2:
-        st.subheader("Advanced Analytics")
+        st.markdown('<p class="section-title">📊 Advanced Analytics</p>', unsafe_allow_html=True)
         st.dataframe(df_escalado.describe(), use_container_width=True)
         
         fig_box = px.box(df_escalado, title="Parameter Distribution")
-        fig_box.update_layout(height=400)
+        fig_box.update_layout(
+            height=400,
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(255,255,255,0.05)',
+            font=dict(color='white'),
+            title_font=dict(color='white')
+        )
         st.plotly_chart(fig_box, use_container_width=True)
     
     with tab3:
-        st.subheader("Raw Data")
+        st.markdown('<p class="section-title">📋 Raw Data</p>', unsafe_allow_html=True)
         rows = st.slider("Rows:", 10, min(500, len(df_escalado)), 50)
         st.dataframe(df_escalado.head(rows), use_container_width=True)
     
     with tab4:
-        st.subheader("Correlation Matrix")
+        st.markdown('<p class="section-title">🔗 Correlation Matrix</p>', unsafe_allow_html=True)
         if len(df_escalado.columns) > 1:
             corr = df_escalado.corr()
             fig_corr = px.imshow(
@@ -772,11 +912,17 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
                 zmin=-1,
                 zmax=1
             )
-            fig_corr.update_layout(height=550)
+            fig_corr.update_layout(
+                height=550,
+                plot_bgcolor='rgba(0,0,0,0)',
+                paper_bgcolor='rgba(255,255,255,0.05)',
+                font=dict(color='white'),
+                title_font=dict(color='white')
+            )
             st.plotly_chart(fig_corr, use_container_width=True)
     
     with tab5:
-        st.subheader("Export Data - Multiple Formats")
+        st.markdown('<p class="section-title">📥 Export Data - Multiple Formats</p>', unsafe_allow_html=True)
         
         st.markdown("### Basic Formats")
         
@@ -785,7 +931,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         with col1:
             st.markdown("""
             <div class="export-card">
-                <div class="title">CSV</div>
+                <div class="title">📊 CSV</div>
                 <div class="subtitle">Universal format</div>
                 <span class="export-badge badge-csv">CSV</span>
                 <span class="export-badge badge-raw">Raw</span>
@@ -814,7 +960,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         with col2:
             st.markdown("""
             <div class="export-card">
-                <div class="title">Excel</div>
+                <div class="title">📗 Excel</div>
                 <div class="subtitle">With formatting</div>
                 <span class="export-badge badge-excel">Excel</span>
                 <span class="export-badge badge-raw">Raw</span>
@@ -841,7 +987,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         with col3:
             st.markdown("""
             <div class="export-card">
-                <div class="title">JSON</div>
+                <div class="title">📄 JSON</div>
                 <div class="subtitle">For APIs</div>
                 <span class="export-badge badge-json">JSON</span>
                 <span class="export-badge badge-raw">Raw</span>
@@ -870,7 +1016,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         with col4:
             st.markdown("""
             <div class="export-card">
-                <div class="title">ZIP</div>
+                <div class="title">📦 ZIP</div>
                 <div class="subtitle">All in one</div>
                 <span class="export-badge badge-csv">CSV</span>
                 <span class="export-badge badge-excel">Excel</span>
@@ -910,7 +1056,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         with col1:
             st.markdown("""
             <div class="export-card">
-                <div class="title">HTML Report</div>
+                <div class="title">📊 HTML Report</div>
                 <div class="subtitle">With statistics and branding</div>
                 <span class="export-badge badge-vsd">VSD Specialist</span>
             </div>
@@ -928,7 +1074,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         with col2:
             st.markdown("""
             <div class="export-card">
-                <div class="title">Full Package</div>
+                <div class="title">📦 Full Package</div>
                 <div class="subtitle">All formats in ZIP</div>
                 <span class="export-badge badge-csv">CSV</span>
                 <span class="export-badge badge-excel">Excel</span>
@@ -974,18 +1120,14 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         """)
 
 else:
-    # ==================== PANTALLA DE INICIO ====================
+    # ==================== PANTALLA DE INICIO ESPECTACULAR ====================
     st.markdown("""
-    <div style="text-align: center; padding: 2rem 0;">
-        <div style="font-size: 3.5rem; opacity: 0.5;">⚡</div>
-        <h2 style="color: #1a2a6c; margin: 0.5rem 0; font-size: 1.5rem;">UMM Analyzer Pro</h2>
-        <p style="color: #888; font-size: 0.9rem;">
-            Upload your .umm file to start analyzing industrial data
-        </p>
-        <div style="background: #1a2a6c; padding: 0.3rem 1.5rem; border-radius: 4px; display: inline-block; margin-top: 0.3rem;">
-            <span style="color: #ffd700; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.5px;">
-                ESPECIALISTA VSD - FRONTEND DEVELOPER - JUAN CARLOS HOLGUIN
-            </span>
+    <div style="text-align: center; padding: 3rem 0;">
+        <div style="font-size: 4rem; opacity: 0.4; animation: float 3s ease-in-out infinite;">⚡</div>
+        <h1 class="welcome-title">UMM Analyzer Pro</h1>
+        <p class="welcome-subtitle">Upload your .umm file to start analyzing industrial data</p>
+        <div style="margin-top: 0.5rem;">
+            <span class="welcome-badge">ESPECIALISTA VSD - FRONTEND DEVELOPER - JUAN CARLOS HOLGUIN</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -994,28 +1136,28 @@ else:
     
     with col2:
         st.markdown("""
-        <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 20px rgba(0,0,0,0.05);">
-            <h4 style="color: #1a2a6c; margin-top: 0;">Quick Guide</h4>
-            <ol style="line-height: 1.8rem; padding-left: 1.2rem; font-size: 0.9rem;">
-                <li>📂 Click <strong>Browse Files</strong> in the sidebar</li>
-                <li>⚡ Select your <strong>.umm</strong> file</li>
-                <li>🚀 Click <strong>Process File</strong></li>
-                <li>📊 Explore the <strong>interactive dashboard</strong></li>
-                <li>📥 Export in <strong>multiple formats</strong></li>
+        <div style="background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);">
+            <h4 style="color: white; margin-top: 0; text-align: center;">📋 Quick Guide</h4>
+            <ol style="line-height: 2.2rem; padding-left: 1.2rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                <li>📂 Click <strong style="color:#ffd700;">Browse Files</strong> in the sidebar</li>
+                <li>⚡ Select your <strong style="color:#ffd700;">.umm</strong> file</li>
+                <li>🚀 Click <strong style="color:#ffd700;">Process File</strong></li>
+                <li>📊 Explore the <strong style="color:#ffd700;">interactive dashboard</strong></li>
+                <li>📥 Export in <strong style="color:#ffd700;">multiple formats</strong></li>
             </ol>
-            <hr>
+            <hr style="border-color: rgba(255,255,255,0.05);">
             <div style="display: flex; justify-content: space-around; text-align: center;">
                 <div>
-                    <div style="font-size: 1.2rem;">📈</div>
-                    <div style="font-size: 0.65rem; color: #888;">Monitor</div>
+                    <div style="font-size: 1.5rem;">📈</div>
+                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.3);">Monitor</div>
                 </div>
                 <div>
-                    <div style="font-size: 1.2rem;">📊</div>
-                    <div style="font-size: 0.65rem; color: #888;">Analyze</div>
+                    <div style="font-size: 1.5rem;">📊</div>
+                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.3);">Analyze</div>
                 </div>
                 <div>
-                    <div style="font-size: 1.2rem;">📥</div>
-                    <div style="font-size: 0.65rem; color: #888;">Export</div>
+                    <div style="font-size: 1.5rem;">📥</div>
+                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.3);">Export</div>
                 </div>
             </div>
         </div>
@@ -1025,13 +1167,13 @@ else:
 st.markdown("""
 <div class="footer">
     <p>
-        ⚡ UMM Analyzer Pro v4.0
+        ⚡ UMM Analyzer Pro v5.0
         <span class="separator">|</span>
         <span class="vsd">ESPECIALISTA VSD - FRONTEND DEVELOPER - JUAN CARLOS HOLGUIN</span>
         <span class="separator">|</span>
         📅 {date}
     </p>
-    <p style="font-size: 0.65rem; color: #aaa; margin-top: 0.2rem;">
+    <p style="font-size: 0.65rem; color: rgba(255,255,255,0.1); margin-top: 0.2rem;">
         Industrial Automation Expert | Data Analysis Platform
     </p>
 </div>
