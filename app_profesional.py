@@ -19,7 +19,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ==================== CSS PERSONALIZADO - COLORES MEJORADOS ====================
+# ==================== CSS PERSONALIZADO - TABS MEJORADAS ====================
 st.markdown("""
 <style>
     /* FONDO CON GRADIENTE */
@@ -124,31 +124,32 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
     
-    /* TABS - MEJOR VISIBILIDAD */
+    /* ========== TABS MEJORADAS - VISIBILIDAD PERFECTA ========== */
     .stTabs [data-baseweb="tab-list"] {
         gap: 0.5rem;
-        background: rgba(255,255,255,0.06);
+        background: rgba(0,0,0,0.4);
         backdrop-filter: blur(10px);
         padding: 0.5rem;
         border-radius: 16px;
-        border: 1px solid rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.1);
         box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
     }
     .stTabs [data-baseweb="tab"] {
         border-radius: 10px !important;
         padding: 0.8rem 1.8rem !important;
         font-weight: 700 !important;
-        font-size: 0.85rem !important;
+        font-size: 0.9rem !important;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        background: rgba(255,255,255,0.05) !important;
-        color: rgba(255,255,255,0.6) !important;
-        border: 1px solid transparent !important;
-        letter-spacing: 0.3px;
+        background: rgba(255,255,255,0.08) !important;
+        color: rgba(255,255,255,0.7) !important;
+        border: 2px solid transparent !important;
+        letter-spacing: 0.5px;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        background: rgba(255,255,255,0.12) !important;
+        background: rgba(255,255,255,0.18) !important;
         color: #ffffff !important;
         transform: translateY(-2px);
+        border-color: rgba(255,215,0,0.2) !important;
     }
     .stTabs [data-baseweb="tab"][aria-selected="true"] {
         background: linear-gradient(135deg, #ffd700, #f7971e) !important;
@@ -159,7 +160,7 @@ st.markdown("""
         font-weight: 800 !important;
     }
     
-    /* TARJETAS DE MÉTRICAS */
+    /* ========== TARJETAS DE MÉTRICAS ========== */
     .metric-card {
         background: rgba(255,255,255,0.06);
         backdrop-filter: blur(10px);
@@ -199,7 +200,7 @@ st.markdown("""
         color: rgba(255,255,255,0.4);
     }
     
-    /* TARJETAS DE ESTADO */
+    /* ========== TARJETAS DE ESTADO ========== */
     .status-card {
         background: rgba(255,255,255,0.06);
         backdrop-filter: blur(10px);
@@ -231,7 +232,7 @@ st.markdown("""
     .status-warning { border-left: 4px solid #ffd600; }
     .status-danger { border-left: 4px solid #ff1744; }
     
-    /* BOTONES - ALTA VISIBILIDAD */
+    /* ========== BOTONES ========== */
     .stButton > button {
         background: linear-gradient(135deg, #ffd700, #f7971e) !important;
         color: #0f0c29 !important;
@@ -250,7 +251,6 @@ st.markdown("""
         background: linear-gradient(135deg, #ffe082, #ffd700) !important;
     }
     
-    /* BOTONES DE DESCARGA (download buttons) */
     .stDownloadButton > button {
         background: linear-gradient(135deg, #00bcd4, #0097a7) !important;
         color: #ffffff !important;
@@ -267,7 +267,7 @@ st.markdown("""
         background: linear-gradient(135deg, #26c6da, #00bcd4) !important;
     }
     
-    /* SIDEBAR */
+    /* ========== SIDEBAR ========== */
     .css-1d391kg {
         background: linear-gradient(180deg, rgba(15,12,41,0.95), rgba(26,26,62,0.95)) !important;
         backdrop-filter: blur(20px);
@@ -279,7 +279,7 @@ st.markdown("""
     .css-1d391kg .stCheckbox label { color: rgba(255,255,255,0.7) !important; }
     .css-1d391kg .stFileUploader label { color: rgba(255,255,255,0.7) !important; }
     
-    /* SIDEBAR - INFO ESPECIALISTA */
+    /* ========== SIDEBAR - ESPECIALISTA ========== */
     .specialist-card {
         background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,215,0,0.02));
         padding: 1rem;
@@ -314,7 +314,7 @@ st.markdown("""
         margin-top: 0.2rem;
     }
     
-    /* EXPORT CARDS */
+    /* ========== EXPORT CARDS ========== */
     .export-card {
         background: rgba(255,255,255,0.05);
         backdrop-filter: blur(10px);
@@ -354,7 +354,7 @@ st.markdown("""
     .badge-scaled { background: rgba(40,53,147,0.25); color: #7986cb; border: 1px solid rgba(40,53,147,0.2); }
     .badge-vsd { background: rgba(245,127,23,0.25); color: #ffcc80; border: 1px solid rgba(245,127,23,0.2); }
     
-    /* FOOTER */
+    /* ========== FOOTER ========== */
     .footer {
         text-align: center;
         padding: 1.5rem;
@@ -366,7 +366,7 @@ st.markdown("""
     .footer .vsd { color: #ffd700; font-weight: 700; }
     .footer .separator { color: rgba(255,255,255,0.1); margin: 0 0.5rem; }
     
-    /* WELCOME */
+    /* ========== WELCOME ========== */
     .welcome-title {
         font-size: 2.5rem;
         font-weight: 800;
@@ -387,7 +387,7 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
     
-    /* SECTION TITLES */
+    /* ========== SECTION TITLES ========== */
     .section-title {
         color: #ffffff;
         font-size: 1.2rem;
@@ -396,7 +396,7 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
     
-    /* SELECTBOX Y MULTISELECT */
+    /* ========== SELECTBOX / MULTISELECT ========== */
     .stSelectbox label, .stMultiSelect label {
         color: rgba(255,255,255,0.8) !important;
         font-weight: 600 !important;
@@ -411,22 +411,19 @@ st.markdown("""
         border-color: #ffd700 !important;
     }
     
-    /* SLIDER */
+    /* ========== SLIDER ========== */
     .stSlider label {
         color: rgba(255,255,255,0.8) !important;
         font-weight: 600 !important;
     }
-    .stSlider .st-bb {
-        background: rgba(255,255,255,0.08) !important;
-    }
     
-    /* CHECKBOX */
+    /* ========== CHECKBOX ========== */
     .stCheckbox label {
         color: rgba(255,255,255,0.8) !important;
         font-weight: 600 !important;
     }
     
-    /* DATAFRAME */
+    /* ========== DATAFRAME ========== */
     .stDataFrame {
         background: rgba(255,255,255,0.05) !important;
         border-radius: 12px !important;
@@ -441,24 +438,13 @@ st.markdown("""
         color: rgba(255,255,255,0.85) !important;
     }
     
-    /* METRICAS DE STREAMLIT */
-    .stMetric label {
-        color: rgba(255,255,255,0.6) !important;
-    }
-    .stMetric .stMetricValue {
-        color: #ffffff !important;
-    }
-    
-    /* INFO, SUCCESS, WARNING, ERROR */
+    /* ========== ALERTS ========== */
     .stAlert {
         border-radius: 12px !important;
         backdrop-filter: blur(10px) !important;
     }
     .stAlert .stAlertContent {
         color: #ffffff !important;
-    }
-    .stAlert .stAlertIcon {
-        color: #ffd700 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -856,8 +842,9 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         </div>
         """, unsafe_allow_html=True)
     
-    # ===== TABS =====
+    # ===== TABS MEJORADAS =====
     st.markdown("---")
+    st.markdown("### 📊 Navigation")
     
     tab1, tab2, tab3, tab4, tab5 = st.tabs([
         "📈 Monitor",
