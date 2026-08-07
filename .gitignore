@@ -18,6 +18,7 @@ build/
 *.html
 *.png
 *.zip
+*.log
 
 # IDE
 .vscode/
@@ -28,6 +29,3 @@ build/
 # OS
 .DS_Store
 Thumbs.db
-
-# Logs
-*.log
