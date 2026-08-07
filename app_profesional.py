@@ -19,30 +19,16 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ==================== CSS PERSONALIZADO - VERSIÓN ESPECTACULAR ====================
+# ==================== CSS PERSONALIZADO - COLORES MEJORADOS ====================
 st.markdown("""
 <style>
-    /* FONDO CON GRADIENTE ANIMADO */
+    /* FONDO CON GRADIENTE */
     .stApp {
-        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        background: linear-gradient(135deg, #0f0c29, #1a1a3e, #24243e);
         background-attachment: fixed;
     }
     
-    .stApp::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-            radial-gradient(ellipse at 20% 50%, rgba(72, 49, 212, 0.1) 0%, transparent 50%),
-            radial-gradient(ellipse at 80% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
-        pointer-events: none;
-        z-index: 0;
-    }
-    
-    /* ANIMACIONES GLOBALES */
+    /* ANIMACIONES */
     @keyframes fadeInUp {
         from { opacity: 0; transform: translateY(30px); }
         to { opacity: 1; transform: translateY(0); }
@@ -55,46 +41,28 @@ st.markdown("""
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.05); }
     }
-    @keyframes shimmer {
-        0% { background-position: -200% center; }
-        100% { background-position: 200% center; }
-    }
     @keyframes float {
         0%, 100% { transform: translateY(0px); }
         50% { transform: translateY(-10px); }
     }
     
-    .fade-in {
-        animation: fadeInUp 0.8s ease-out;
-    }
+    .fade-in { animation: fadeInUp 0.8s ease-out; }
     
-    /* ENCABEZADO CON EFECTO GLASSMORPHISM */
+    /* ENCABEZADO */
     .main-header {
-        background: rgba(255,255,255,0.05);
+        background: rgba(255,255,255,0.08);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         padding: 1.5rem 2.5rem;
         border-radius: 20px;
         margin-bottom: 2rem;
-        border: 1px solid rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.1);
         box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        position: relative;
         z-index: 1;
         animation: slideDown 0.8s ease-out;
-    }
-    .main-header::before {
-        content: '';
-        position: absolute;
-        top: -1px;
-        left: -1px;
-        right: -1px;
-        bottom: -1px;
-        border-radius: 20px;
-        background: linear-gradient(135deg, rgba(255,215,0,0.2), transparent, rgba(255,215,0,0.1));
-        z-index: -1;
     }
     .main-header .left {
         display: flex;
@@ -110,7 +78,7 @@ st.markdown("""
         animation: pulse 3s ease-in-out infinite;
     }
     .main-header h1 {
-        color: white;
+        color: #ffffff;
         font-size: 2rem;
         font-weight: 800;
         margin: 0;
@@ -120,7 +88,7 @@ st.markdown("""
         -webkit-text-fill-color: transparent;
     }
     .main-header .subtitle {
-        color: rgba(255,255,255,0.4);
+        color: rgba(255,255,255,0.6);
         font-size: 0.75rem;
         margin: 0;
         letter-spacing: 2px;
@@ -128,7 +96,7 @@ st.markdown("""
     }
     .main-header .right {
         text-align: right;
-        border-left: 2px solid rgba(255,255,255,0.08);
+        border-left: 2px solid rgba(255,255,255,0.1);
         padding-left: 1.5rem;
     }
     .main-header .right .name {
@@ -139,7 +107,7 @@ st.markdown("""
         text-shadow: 0 0 30px rgba(255,215,0,0.1);
     }
     .main-header .right .title {
-        color: rgba(255,255,255,0.35);
+        color: rgba(255,255,255,0.5);
         font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -151,19 +119,19 @@ st.markdown("""
         border-radius: 20px;
         font-size: 0.6rem;
         color: #ffd700;
-        border: 1px solid rgba(255,215,0,0.1);
+        border: 1px solid rgba(255,215,0,0.15);
         margin-top: 0.2rem;
         letter-spacing: 0.5px;
     }
     
-    /* TABS MEJORADOS - MÁS VISIBLES Y MODERNOS */
+    /* TABS - MEJOR VISIBILIDAD */
     .stTabs [data-baseweb="tab-list"] {
         gap: 0.5rem;
-        background: rgba(255,255,255,0.05);
+        background: rgba(255,255,255,0.06);
         backdrop-filter: blur(10px);
         padding: 0.5rem;
         border-radius: 16px;
-        border: 1px solid rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
         box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
     }
     .stTabs [data-baseweb="tab"] {
@@ -172,31 +140,32 @@ st.markdown("""
         font-weight: 700 !important;
         font-size: 0.85rem !important;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        background: rgba(255,255,255,0.03) !important;
-        color: rgba(255,255,255,0.5) !important;
+        background: rgba(255,255,255,0.05) !important;
+        color: rgba(255,255,255,0.6) !important;
         border: 1px solid transparent !important;
         letter-spacing: 0.3px;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        background: rgba(255,255,255,0.08) !important;
-        color: white !important;
+        background: rgba(255,255,255,0.12) !important;
+        color: #ffffff !important;
         transform: translateY(-2px);
     }
     .stTabs [data-baseweb="tab"][aria-selected="true"] {
-        background: linear-gradient(135deg, #1a2a6c, #302b63) !important;
-        color: white !important;
-        border-color: rgba(255,215,0,0.3) !important;
-        box-shadow: 0 10px 30px -5px rgba(26, 42, 108, 0.5) !important;
+        background: linear-gradient(135deg, #ffd700, #f7971e) !important;
+        color: #0f0c29 !important;
+        border-color: #ffd700 !important;
+        box-shadow: 0 10px 30px -5px rgba(255,215,0,0.4) !important;
         transform: translateY(-3px);
+        font-weight: 800 !important;
     }
     
-    /* TARJETAS DE MÉTRICAS - GLASSMORPHISM */
+    /* TARJETAS DE MÉTRICAS */
     .metric-card {
-        background: rgba(255,255,255,0.05);
+        background: rgba(255,255,255,0.06);
         backdrop-filter: blur(10px);
         padding: 1.2rem 1.5rem;
         border-radius: 16px;
-        border: 1px solid rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
         box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
         text-align: center;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -208,16 +177,12 @@ st.markdown("""
         transform: translateY(-8px) scale(1.02);
         box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5);
         border-color: #ffd700;
-        background: rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.10);
     }
-    .metric-card .icon {
-        font-size: 1.8rem;
-        margin-bottom: 0.3rem;
-        display: block;
-    }
+    .metric-card .icon { font-size: 1.8rem; margin-bottom: 0.3rem; display: block; }
     .metric-card .label {
         font-size: 0.65rem;
-        color: rgba(255,255,255,0.4);
+        color: rgba(255,255,255,0.5);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1.5px;
@@ -225,24 +190,22 @@ st.markdown("""
     .metric-card .value {
         font-size: 1.8rem;
         font-weight: 800;
-        color: white;
+        color: #ffffff;
         margin: 0.2rem 0;
-        background: linear-gradient(90deg, #ffffff, #ffd700);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(255,255,255,0.1);
     }
     .metric-card .unit {
         font-size: 0.7rem;
-        color: rgba(255,255,255,0.3);
+        color: rgba(255,255,255,0.4);
     }
     
     /* TARJETAS DE ESTADO */
     .status-card {
-        background: rgba(255,255,255,0.05);
+        background: rgba(255,255,255,0.06);
         backdrop-filter: blur(10px);
         padding: 1.2rem;
         border-radius: 16px;
-        border: 1px solid rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
         box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
         text-align: center;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -252,78 +215,82 @@ st.markdown("""
         transform: scale(1.03);
         box-shadow: 0 20px 40px -10px rgba(0,0,0,0.4);
     }
-    .status-card .status-icon {
-        font-size: 2.5rem;
-    }
+    .status-card .status-icon { font-size: 2.5rem; }
     .status-card .status-label {
         font-size: 0.9rem;
         font-weight: 700;
         margin-top: 0.3rem;
-        color: white;
+        color: #ffffff;
     }
     .status-card .status-detail {
         font-size: 0.7rem;
-        color: rgba(255,255,255,0.3);
+        color: rgba(255,255,255,0.4);
         margin-top: 0.1rem;
     }
-    .status-ok { border-left: 4px solid #28a745; }
-    .status-warning { border-left: 4px solid #ffc107; }
-    .status-danger { border-left: 4px solid #dc3545; }
+    .status-ok { border-left: 4px solid #00e676; }
+    .status-warning { border-left: 4px solid #ffd600; }
+    .status-danger { border-left: 4px solid #ff1744; }
     
-    /* BOTONES CON EFECTO */
+    /* BOTONES - ALTA VISIBILIDAD */
     .stButton > button {
-        background: linear-gradient(135deg, #1a2a6c, #302b63) !important;
-        color: white !important;
-        border: 1px solid rgba(255,215,0,0.2) !important;
+        background: linear-gradient(135deg, #ffd700, #f7971e) !important;
+        color: #0f0c29 !important;
+        border: none !important;
         border-radius: 12px !important;
         padding: 0.7rem 1.5rem !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
         font-size: 0.85rem !important;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        box-shadow: 0 10px 30px -10px rgba(26, 42, 108, 0.4) !important;
-        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px -10px rgba(255,215,0,0.4) !important;
         letter-spacing: 0.5px;
     }
     .stButton > button:hover {
         transform: translateY(-3px) scale(1.02) !important;
-        box-shadow: 0 20px 40px -10px rgba(26, 42, 108, 0.6) !important;
-        border-color: #ffd700 !important;
+        box-shadow: 0 20px 40px -10px rgba(255,215,0,0.6) !important;
+        background: linear-gradient(135deg, #ffe082, #ffd700) !important;
+    }
+    
+    /* BOTONES DE DESCARGA (download buttons) */
+    .stDownloadButton > button {
+        background: linear-gradient(135deg, #00bcd4, #0097a7) !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 0.5rem 1.2rem !important;
+        font-weight: 700 !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 10px 30px -10px rgba(0,188,212,0.4) !important;
+    }
+    .stDownloadButton > button:hover {
+        transform: translateY(-3px) scale(1.02) !important;
+        box-shadow: 0 20px 40px -10px rgba(0,188,212,0.6) !important;
+        background: linear-gradient(135deg, #26c6da, #00bcd4) !important;
     }
     
     /* SIDEBAR */
     .css-1d391kg {
-        background: linear-gradient(180deg, rgba(15,12,41,0.95), rgba(48,43,99,0.95)) !important;
+        background: linear-gradient(180deg, rgba(15,12,41,0.95), rgba(26,26,62,0.95)) !important;
         backdrop-filter: blur(20px);
         border-right: 1px solid rgba(255,255,255,0.05);
     }
-    .css-1d391kg .stMarkdown {
-        color: rgba(255,255,255,0.8) !important;
-    }
-    .css-1d391kg .stSelectbox label {
-        color: rgba(255,255,255,0.6) !important;
-    }
-    .css-1d391kg .stSlider label {
-        color: rgba(255,255,255,0.6) !important;
-    }
-    .css-1d391kg .stCheckbox label {
-        color: rgba(255,255,255,0.6) !important;
-    }
+    .css-1d391kg .stMarkdown { color: rgba(255,255,255,0.85) !important; }
+    .css-1d391kg .stSelectbox label { color: rgba(255,255,255,0.7) !important; }
+    .css-1d391kg .stSlider label { color: rgba(255,255,255,0.7) !important; }
+    .css-1d391kg .stCheckbox label { color: rgba(255,255,255,0.7) !important; }
+    .css-1d391kg .stFileUploader label { color: rgba(255,255,255,0.7) !important; }
     
-    /* SIDEBAR - INFO DEL ESPECIALISTA */
+    /* SIDEBAR - INFO ESPECIALISTA */
     .specialist-card {
-        background: linear-gradient(135deg, rgba(255,215,0,0.05), rgba(255,215,0,0.02));
+        background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,215,0,0.02));
         padding: 1rem;
         border-radius: 16px;
         margin-top: 1rem;
         text-align: center;
-        border: 1px solid rgba(255,215,0,0.08);
+        border: 1px solid rgba(255,215,0,0.12);
         border-left: 3px solid #ffd700;
         backdrop-filter: blur(10px);
     }
-    .specialist-card .icon {
-        font-size: 1.5rem;
-        opacity: 0.6;
-    }
+    .specialist-card .icon { font-size: 1.5rem; opacity: 0.7; }
     .specialist-card .name {
         font-size: 1rem;
         font-weight: 700;
@@ -332,28 +299,28 @@ st.markdown("""
     }
     .specialist-card .title {
         font-size: 0.65rem;
-        color: rgba(255,255,255,0.4);
+        color: rgba(255,255,255,0.5);
         text-transform: uppercase;
         letter-spacing: 1px;
     }
     .specialist-card .badge {
         display: inline-block;
-        background: rgba(255,215,0,0.1);
+        background: rgba(255,215,0,0.12);
         padding: 0.15rem 0.8rem;
         border-radius: 20px;
         font-size: 0.55rem;
         color: #ffd700;
-        border: 1px solid rgba(255,215,0,0.1);
+        border: 1px solid rgba(255,215,0,0.12);
         margin-top: 0.2rem;
     }
     
     /* EXPORT CARDS */
     .export-card {
-        background: rgba(255,255,255,0.03);
+        background: rgba(255,255,255,0.05);
         backdrop-filter: blur(10px);
         padding: 1.2rem;
         border-radius: 16px;
-        border: 1px solid rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
         margin: 0.5rem 0;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -365,12 +332,12 @@ st.markdown("""
     .export-card .title {
         font-size: 1rem;
         font-weight: 700;
-        color: white;
+        color: #ffffff;
         margin-bottom: 0.2rem;
     }
     .export-card .subtitle {
         font-size: 0.7rem;
-        color: rgba(255,255,255,0.3);
+        color: rgba(255,255,255,0.4);
     }
     .export-badge {
         display: inline-block;
@@ -380,32 +347,26 @@ st.markdown("""
         font-weight: 600;
         margin: 0.15rem;
     }
-    .badge-csv { background: rgba(46,125,50,0.2); color: #81c784; border: 1px solid rgba(46,125,50,0.2); }
-    .badge-excel { background: rgba(13,71,161,0.2); color: #64b5f6; border: 1px solid rgba(13,71,161,0.2); }
-    .badge-json { background: rgba(230,81,0,0.2); color: #ffb74d; border: 1px solid rgba(230,81,0,0.2); }
-    .badge-raw { background: rgba(198,40,40,0.2); color: #ef9a9a; border: 1px solid rgba(198,40,40,0.2); }
-    .badge-scaled { background: rgba(40,53,147,0.2); color: #7986cb; border: 1px solid rgba(40,53,147,0.2); }
-    .badge-vsd { background: rgba(245,127,23,0.2); color: #ffcc80; border: 1px solid rgba(245,127,23,0.2); }
+    .badge-csv { background: rgba(46,125,50,0.25); color: #81c784; border: 1px solid rgba(46,125,50,0.2); }
+    .badge-excel { background: rgba(13,71,161,0.25); color: #64b5f6; border: 1px solid rgba(13,71,161,0.2); }
+    .badge-json { background: rgba(230,81,0,0.25); color: #ffb74d; border: 1px solid rgba(230,81,0,0.2); }
+    .badge-raw { background: rgba(198,40,40,0.25); color: #ef9a9a; border: 1px solid rgba(198,40,40,0.2); }
+    .badge-scaled { background: rgba(40,53,147,0.25); color: #7986cb; border: 1px solid rgba(40,53,147,0.2); }
+    .badge-vsd { background: rgba(245,127,23,0.25); color: #ffcc80; border: 1px solid rgba(245,127,23,0.2); }
     
     /* FOOTER */
     .footer {
         text-align: center;
         padding: 1.5rem;
-        color: rgba(255,255,255,0.2);
+        color: rgba(255,255,255,0.3);
         border-top: 1px solid rgba(255,255,255,0.05);
         margin-top: 2rem;
         font-size: 0.7rem;
     }
-    .footer .vsd {
-        color: #ffd700;
-        font-weight: 700;
-    }
-    .footer .separator {
-        color: rgba(255,255,255,0.1);
-        margin: 0 0.5rem;
-    }
+    .footer .vsd { color: #ffd700; font-weight: 700; }
+    .footer .separator { color: rgba(255,255,255,0.1); margin: 0 0.5rem; }
     
-    /* HEADER EN PANTALLA DE INICIO */
+    /* WELCOME */
     .welcome-title {
         font-size: 2.5rem;
         font-weight: 800;
@@ -413,29 +374,91 @@ st.markdown("""
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
-    .welcome-subtitle {
-        color: rgba(255,255,255,0.4);
-        font-size: 1rem;
-    }
+    .welcome-subtitle { color: rgba(255,255,255,0.5); font-size: 1rem; }
     .welcome-badge {
         background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,215,0,0.05));
         padding: 0.3rem 1.5rem;
         border-radius: 20px;
         display: inline-block;
-        border: 1px solid rgba(255,215,0,0.1);
+        border: 1px solid rgba(255,215,0,0.12);
         color: #ffd700;
         font-weight: 600;
         font-size: 0.8rem;
         letter-spacing: 0.5px;
     }
     
-    /* SUBTITULOS */
+    /* SECTION TITLES */
     .section-title {
-        color: white;
+        color: #ffffff;
         font-size: 1.2rem;
         font-weight: 700;
         margin-bottom: 1rem;
         letter-spacing: 0.5px;
+    }
+    
+    /* SELECTBOX Y MULTISELECT */
+    .stSelectbox label, .stMultiSelect label {
+        color: rgba(255,255,255,0.8) !important;
+        font-weight: 600 !important;
+    }
+    .stSelectbox .st-bb, .stMultiSelect .st-bb {
+        background: rgba(255,255,255,0.08) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 10px !important;
+    }
+    .stSelectbox .st-bb:hover, .stMultiSelect .st-bb:hover {
+        border-color: #ffd700 !important;
+    }
+    
+    /* SLIDER */
+    .stSlider label {
+        color: rgba(255,255,255,0.8) !important;
+        font-weight: 600 !important;
+    }
+    .stSlider .st-bb {
+        background: rgba(255,255,255,0.08) !important;
+    }
+    
+    /* CHECKBOX */
+    .stCheckbox label {
+        color: rgba(255,255,255,0.8) !important;
+        font-weight: 600 !important;
+    }
+    
+    /* DATAFRAME */
+    .stDataFrame {
+        background: rgba(255,255,255,0.05) !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(255,255,255,0.06) !important;
+    }
+    .stDataFrame thead tr th {
+        background: rgba(255,215,0,0.08) !important;
+        color: #ffd700 !important;
+        font-weight: 700 !important;
+    }
+    .stDataFrame tbody tr td {
+        color: rgba(255,255,255,0.85) !important;
+    }
+    
+    /* METRICAS DE STREAMLIT */
+    .stMetric label {
+        color: rgba(255,255,255,0.6) !important;
+    }
+    .stMetric .stMetricValue {
+        color: #ffffff !important;
+    }
+    
+    /* INFO, SUCCESS, WARNING, ERROR */
+    .stAlert {
+        border-radius: 12px !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    .stAlert .stAlertContent {
+        color: #ffffff !important;
+    }
+    .stAlert .stAlertIcon {
+        color: #ffd700 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -583,14 +606,14 @@ with st.sidebar:
     st.markdown("""
     <div style="text-align: center; padding: 0.5rem 0;">
         <div style="font-size: 2rem; opacity: 0.6;">⚡</div>
-        <h3 style="color: white; margin: 0; font-size: 0.9rem; letter-spacing: 2px; opacity: 0.6;">CONTROL PANEL</h3>
+        <h3 style="color: rgba(255,255,255,0.6); margin: 0; font-size: 0.9rem; letter-spacing: 2px;">CONTROL PANEL</h3>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("---")
     
     archivo_subido = st.file_uploader(
-        "Upload .umm File",
+        "📂 Upload .umm File",
         type=['umm', 'UMM', 'csv', 'txt'],
         help="Select your .umm file"
     )
@@ -601,21 +624,21 @@ with st.sidebar:
         
         contenido = archivo_subido.read()
         hash_md5 = hashlib.md5(contenido).hexdigest()
-        st.caption(f"MD5: {hash_md5[:16]}...")
+        st.caption(f"🔐 MD5: {hash_md5[:16]}...")
         archivo_subido.seek(0)
         
         st.markdown("---")
         st.markdown("### ⚙️ Settings")
         
         limite_muestras = st.slider(
-            "Sample Limit",
+            "📊 Sample Limit",
             min_value=100,
             max_value=100000,
             value=50000,
             step=1000
         )
         
-        aplicar_escalado_opt = st.checkbox("Apply Scaling", value=True)
+        aplicar_escalado_opt = st.checkbox("✅ Apply Scaling", value=True)
         
         if st.button("🚀 Process File", type="primary"):
             st.session_state['procesar'] = True
@@ -632,7 +655,7 @@ with st.sidebar:
         <div class="name">Juan Carlos Holguin</div>
         <div class="title">Especialista VSD</div>
         <div class="badge">Frontend Developer</div>
-        <div style="font-size: 0.55rem; color: rgba(255,255,255,0.2); margin-top: 0.4rem;">
+        <div style="font-size: 0.55rem; color: rgba(255,255,255,0.25); margin-top: 0.4rem;">
             Industrial Automation Expert
         </div>
     </div>
@@ -713,7 +736,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     with col2:
         ultimo = df_escalado.iloc[-1]
         st.markdown(f"""
-        <div class="metric-card" style="border-left-color: #007bff;">
+        <div class="metric-card" style="border-left-color: #00bcd4;">
             <span class="icon">⚡</span>
             <div class="label">Frequency</div>
             <div class="value">{ultimo['Frecuencia']:.2f}</div>
@@ -723,7 +746,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     
     with col3:
         st.markdown(f"""
-        <div class="metric-card" style="border-left-color: #28a745;">
+        <div class="metric-card" style="border-left-color: #00e676;">
             <span class="icon">🔌</span>
             <div class="label">Current</div>
             <div class="value">{ultimo['Corriente']:.3f}</div>
@@ -733,7 +756,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     
     with col4:
         st.markdown(f"""
-        <div class="metric-card" style="border-left-color: #dc3545;">
+        <div class="metric-card" style="border-left-color: #ff1744;">
             <span class="icon">🌡️</span>
             <div class="label">Temperature</div>
             <div class="value">{ultimo['Temperatura']:.0f}</div>
@@ -746,7 +769,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     
     with col1:
         st.markdown(f"""
-        <div class="metric-card" style="border-left-color: #17a2b8;">
+        <div class="metric-card" style="border-left-color: #ffd600;">
             <span class="icon">🔄</span>
             <div class="label">Speed</div>
             <div class="value">{ultimo['Velocidad']:.0f}</div>
@@ -756,7 +779,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     
     with col2:
         st.markdown(f"""
-        <div class="metric-card" style="border-left-color: #fd7e14;">
+        <div class="metric-card" style="border-left-color: #ff9100;">
             <span class="icon">🔧</span>
             <div class="label">Torque</div>
             <div class="value">{ultimo['Torque']:.2f}</div>
@@ -766,7 +789,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     
     with col3:
         st.markdown(f"""
-        <div class="metric-card" style="border-left-color: #ffc107;">
+        <div class="metric-card" style="border-left-color: #ffd700;">
             <span class="icon">⚡</span>
             <div class="label">Voltage</div>
             <div class="value">{ultimo['Voltaje']:.2f}</div>
@@ -776,7 +799,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
     
     with col4:
         st.markdown(f"""
-        <div class="metric-card" style="border-left-color: #6f42c1;">
+        <div class="metric-card" style="border-left-color: #d500f9;">
             <span class="icon">💡</span>
             <div class="label">Power</div>
             <div class="value">{ultimo['Potencia']:.3f}</div>
@@ -865,7 +888,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
                 height=450,
                 hovermode='x unified',
                 plot_bgcolor='rgba(0,0,0,0)',
-                paper_bgcolor='rgba(255,255,255,0.05)',
+                paper_bgcolor='rgba(255,255,255,0.03)',
                 font=dict(color='white'),
                 legend=dict(
                     orientation="h", 
@@ -875,7 +898,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
                     x=1,
                     font=dict(color='white')
                 ),
-                title_font=dict(color='white')
+                title_font=dict(color='white', size=16)
             )
             fig.update_traces(line=dict(width=2.5))
             st.plotly_chart(fig, use_container_width=True)
@@ -888,9 +911,9 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         fig_box.update_layout(
             height=400,
             plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(255,255,255,0.05)',
+            paper_bgcolor='rgba(255,255,255,0.03)',
             font=dict(color='white'),
-            title_font=dict(color='white')
+            title_font=dict(color='white', size=16)
         )
         st.plotly_chart(fig_box, use_container_width=True)
     
@@ -915,9 +938,9 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
             fig_corr.update_layout(
                 height=550,
                 plot_bgcolor='rgba(0,0,0,0)',
-                paper_bgcolor='rgba(255,255,255,0.05)',
+                paper_bgcolor='rgba(255,255,255,0.03)',
                 font=dict(color='white'),
-                title_font=dict(color='white')
+                title_font=dict(color='white', size=16)
             )
             st.plotly_chart(fig_corr, use_container_width=True)
     
@@ -1120,7 +1143,7 @@ if st.session_state.get('procesado', False) and 'df_escalado' in st.session_stat
         """)
 
 else:
-    # ==================== PANTALLA DE INICIO ESPECTACULAR ====================
+    # ==================== PANTALLA DE INICIO ====================
     st.markdown("""
     <div style="text-align: center; padding: 3rem 0;">
         <div style="font-size: 4rem; opacity: 0.4; animation: float 3s ease-in-out infinite;">⚡</div>
@@ -1136,8 +1159,8 @@ else:
     
     with col2:
         st.markdown("""
-        <div style="background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);">
-            <h4 style="color: white; margin-top: 0; text-align: center;">📋 Quick Guide</h4>
+        <div style="background: rgba(255,255,255,0.04); backdrop-filter: blur(10px); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);">
+            <h4 style="color: #ffffff; margin-top: 0; text-align: center;">📋 Quick Guide</h4>
             <ol style="line-height: 2.2rem; padding-left: 1.2rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
                 <li>📂 Click <strong style="color:#ffd700;">Browse Files</strong> in the sidebar</li>
                 <li>⚡ Select your <strong style="color:#ffd700;">.umm</strong> file</li>
@@ -1149,15 +1172,15 @@ else:
             <div style="display: flex; justify-content: space-around; text-align: center;">
                 <div>
                     <div style="font-size: 1.5rem;">📈</div>
-                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.3);">Monitor</div>
+                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.35);">Monitor</div>
                 </div>
                 <div>
                     <div style="font-size: 1.5rem;">📊</div>
-                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.3);">Analyze</div>
+                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.35);">Analyze</div>
                 </div>
                 <div>
                     <div style="font-size: 1.5rem;">📥</div>
-                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.3);">Export</div>
+                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.35);">Export</div>
                 </div>
             </div>
         </div>
